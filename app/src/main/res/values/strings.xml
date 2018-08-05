@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Sekolah Kami</string>
+    <string name="HelloText">This is my first App,  </string>
+    <string name="HelloButton">Add</string>
+    <string-array name="pendidikan">
+        <item>TK</item>
+        <item>SD</item>
+        <item>SMP</item>
+        <item>SMA</item>
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+    </string-array>
+</resources>
