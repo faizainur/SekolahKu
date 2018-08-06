@@ -39,6 +39,8 @@ public class FormActvity extends AppCompatActivity {
     EditText etNamaBelakang;
     EditText etNoHP;
     EditText etAlamat;
+    EditText etTanggalLahir;
+    EditText etEmail;
     RadioButton rbPria;
     RadioButton rbWanita;
     Spinner spinnerPendidikan;
@@ -52,7 +54,8 @@ public class FormActvity extends AppCompatActivity {
     String gender = "";
     String hobi = "";
     String jenjang;
-    EditText etTanggalLahir;
+    String tanggalLahir;
+    String email;
     int mYear, mMonth, mDay;
     // endregion
     List<Integer> angka = new ArrayList<>();
@@ -74,7 +77,9 @@ public class FormActvity extends AppCompatActivity {
         cbMenggambar = findViewById(R.id.cb_menggambar);
         cbMenulis = findViewById(R.id.cb_menulis);
         etTanggalLahir = findViewById(R.id.et_date_picker);
+        etEmail = findViewById(R.id.et_email);
 
+        // region Fungsi DataPicker
         etTanggalLahir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +99,7 @@ public class FormActvity extends AppCompatActivity {
                 // endregion
             }
         });
+        // endregion
 
 
         // region Method onClickListener untuk membaca button
@@ -158,7 +164,8 @@ public class FormActvity extends AppCompatActivity {
         namaDepan = etNamaDepan.getText().toString().trim();
         namaBelakang = etNamaBelakang.getText().toString().trim();
         noHP = etNoHP.getText().toString().trim();
-
+        tanggalLahir = etTanggalLahir.getText().toString().trim();
+        email = etEmail.getText().toString().trim();
         if(rbPria.isChecked()){
             gender = rbPria.getText().toString().trim();
         }else if(rbWanita.isChecked()){
@@ -184,6 +191,8 @@ public class FormActvity extends AppCompatActivity {
             student.setJenjang(jenjang);
             student.setHobi(hobi);
             student.setAlamat(alamat);
+            student.setEmail(email);
+            student.setTanggalLahir(tanggalLahir);
 
             // Eksekusi perintah addStudent
             boolean getSuccess = dataSource.addStudent(student);
@@ -194,6 +203,8 @@ public class FormActvity extends AppCompatActivity {
                 etNamaBelakang.setText("");
                 etAlamat.setText("");
                 etNoHP.setText("");
+                etEmail.setText("");
+                etTanggalLahir.setText("");
                 rbWanita.setChecked(false);
                 rbPria.setChecked(false);
                 cbMenulis.setChecked(false);
@@ -206,6 +217,8 @@ public class FormActvity extends AppCompatActivity {
                 etNamaBelakang.setText("");
                 etAlamat.setText("");
                 etNoHP.setText("");
+                etEmail.setText("");
+                etTanggalLahir.setText("");
                 rbWanita.setChecked(false);
                 rbPria.setChecked(false);
                 cbMenulis.setChecked(false);
@@ -241,6 +254,16 @@ public class FormActvity extends AppCompatActivity {
             return false;
         } else if (spinnerPendidikan.getSelectedItemPosition() == 0){
             Toast.makeText(FormActvity.this, "This field must be chosen", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if(tanggalLahir.isEmpty()){
+            etTanggalLahir.setError("This field is required");
+            etTanggalLahir.setText("");
+            etTanggalLahir.requestFocus();
+            return false;
+        } else if (email.isEmpty()){
+            etEmail.setError("This is reauired");
+            etEmail.setText("");
+            etEmail.requestFocus();
             return false;
         }
 

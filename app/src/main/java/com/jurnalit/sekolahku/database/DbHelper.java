@@ -24,7 +24,9 @@ public class DbHelper extends SQLiteOpenHelper{
                 "gender TEXT," +
                 "jenjang TEXT," +
                 "hobi TEXT," +
-                "alamat TEXT)");
+                "alamat TEXT," +
+                "email TEXT," +
+                "tanggal_lahir TEXT)");
     }
 
     @Override

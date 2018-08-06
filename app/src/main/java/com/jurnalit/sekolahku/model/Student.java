@@ -12,6 +12,24 @@ public class Student {
     private String jenjang;
     private String hobi;
     private String alamat;
+    private String email;
+    private String tanggalLahir;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTanggalLahir() {
+        return tanggalLahir;
+    }
+
+    public void setTanggalLahir(String tanggalLahir) {
+        this.tanggalLahir = tanggalLahir;
+    }
 
     public long getId() {
         return id;

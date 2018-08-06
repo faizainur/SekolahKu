@@ -41,6 +41,8 @@ public class StudentDataSource {
         contentValues.put("jenjang", student.getJenjang());
         contentValues.put("hobi", student.getHobi());
         contentValues.put("alamat", student.getAlamat());
+        contentValues.put("email", student.getEmail());
+        contentValues.put("tanggal_lahir", student.getTanggalLahir());
 
         open();
         // Perintah untuk memasukkan data
@@ -70,6 +72,8 @@ public class StudentDataSource {
             student.setJenjang(cursor.getString(5));
             student.setHobi(cursor.getString(6));
             student.setAlamat(cursor.getString(7));
+            student.setEmail(cursor.getString(8));
+            student.setTanggalLahir(cursor.getString(9));
             // Memasukkan data yang dimiliki POJO ke dalam ArrayList
             studentList.add(student);
             // Memerintahkan cursor untuk naik 1 index /  menuju index berikutnya
