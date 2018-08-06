@@ -1,9 +1,12 @@
 package com.jurnalit.sekolahku;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -210,6 +213,8 @@ public class FormActvity extends AppCompatActivity {
                 cbMenulis.setChecked(false);
                 cbMenggambar.setChecked(false);
                 cbMembaca.setChecked(false);
+                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "Data Gagal Tersimpan", Toast.LENGTH_SHORT).show();
                 // Mengosongkan semua field
@@ -255,18 +260,26 @@ public class FormActvity extends AppCompatActivity {
         } else if (spinnerPendidikan.getSelectedItemPosition() == 0){
             Toast.makeText(FormActvity.this, "This field must be chosen", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(tanggalLahir.isEmpty()){
+        } else if (!isValidEmail(email)){
+            etEmail.setError("Not a valid email address");
+            etEmail.setText("");
+            etEmail.requestFocus();
+            return false;
+        } else if (email.isEmpty()){
+            etEmail.setError("This is required");
+            etEmail.setText("");
+            etEmail.requestFocus();
+        }
+        else if(tanggalLahir.isEmpty()){
             etTanggalLahir.setError("This field is required");
             etTanggalLahir.setText("");
             etTanggalLahir.requestFocus();
             return false;
-        } else if (email.isEmpty()){
-            etEmail.setError("This is reauired");
-            etEmail.setText("");
-            etEmail.requestFocus();
-            return false;
         }
 
         return true;
+    }
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }

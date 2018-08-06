@@ -28,7 +28,7 @@ public class ListActivity extends AppCompatActivity {
 
         // Mengisi
         studentList = dataSource.getAllStudent();
-        Log.d("ListActivity", "studentList" + studentList.size());
+        Log.d("ListActivity", "studentList " + studentList.size());
     }
 
     @Override
