@@ -1,5 +1,7 @@
 package com.jurnalit.sekolahku;
 
+import android.app.DatePickerDialog;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,16 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.common.data.DataBufferRef;
 import com.jurnalit.sekolahku.database.StudentDataSource;
 import com.jurnalit.sekolahku.model.Student;
 
 import java.nio.charset.CharacterCodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -46,6 +52,8 @@ public class FormActvity extends AppCompatActivity {
     String gender = "";
     String hobi = "";
     String jenjang;
+    EditText etTanggalLahir;
+    int mYear, mMonth, mDay;
     // endregion
     List<Integer> angka = new ArrayList<>();
     @Override
@@ -65,6 +73,28 @@ public class FormActvity extends AppCompatActivity {
         cbMembaca = findViewById(R.id.cb_membaca);
         cbMenggambar = findViewById(R.id.cb_menggambar);
         cbMenulis = findViewById(R.id.cb_menulis);
+        etTanggalLahir = findViewById(R.id.et_date_picker);
+
+        etTanggalLahir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // region DatePicker Sumber https://www.journaldev.com/9976/android-date-time-picker-dialog
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(FormActvity.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                            {
+                                etTanggalLahir.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+                // endregion
+            }
+        });
+
 
         // region Method onClickListener untuk membaca button
 //        btnSimpan.setOnClickListener(new View.OnClickListener() {
