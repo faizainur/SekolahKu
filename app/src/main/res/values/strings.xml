@@ -3,6 +3,7 @@
     <string name="HelloText">This is my first App,  </string>
     <string name="HelloButton">Add</string>
     <string-array name="pendidikan">
+        <item>Pilih Jenjang Pendidikan</item>
         <item>TK</item>
         <item>SD</item>
         <item>SMP</item>

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.jurnalit.sekolahku.database.StudentDataSource;
 import com.jurnalit.sekolahku.model.Student;
@@ -21,14 +23,20 @@ public class ListActivity extends AppCompatActivity {
     Student student = new Student();
     // Deklarasi List<Student> untuk memgang value array dari database
     List<Student> studentList = new ArrayList<>();
+    //Deklarasi view
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        // Casting list view
+        listView = findViewById(R.id.lv_students);
         dataSource.open();
         studentList = dataSource.getAllStudent();
-        Log.d("ListActivity", "studentList" + studentList.size());
+        Log.d("ListActivity", "studentList " + studentList.size());
+        getData();
         dataSource.close();
     }
 
@@ -47,6 +55,19 @@ public class ListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void getData(){
+        List<Student>studentList = dataSource.getAllStudent();
+
+        List<String> studentData = new ArrayList<>();
+        for (int i = 0; i < studentList.size(); i++){
+            student = studentList.get(i);
+            studentData.add(student.getNamaDepan() + " " + student.getNamaBelakang());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(ListActivity.this,
+                android.R.layout.simple_list_item_1, studentData);
+        listView.setAdapter(adapter);
     }
 }
 
