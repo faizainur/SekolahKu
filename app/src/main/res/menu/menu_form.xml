@@ -4,8 +4,8 @@
     <item
         android:title="Simpan"
         android:id="@+id/action_simpan"
-        android:icon="@drawable/ic_action_save"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:icon="@drawable/ic_action_save"/>
     <!--<item-->
         <!--android:title="Simpan"-->
         <!--android:id="@+id/action_simpan"-->

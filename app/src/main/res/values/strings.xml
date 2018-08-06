@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sekolah Kami</string>
+    <string name="app_name">SekolahKu</string>
     <string name="HelloText">This is my first App,  </string>
     <string name="HelloButton">Add</string>
     <string-array name="pendidikan">
