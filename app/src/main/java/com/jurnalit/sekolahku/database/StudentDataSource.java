@@ -1,5 +1,6 @@
 package com.jurnalit.sekolahku.database;
 
+import android.accessibilityservice.GestureDescription;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -23,11 +24,11 @@ public class StudentDataSource {
         dbHelper = new DbHelper(context);
     }
     // Untuk membuka koneksi dengan database
-    private void open(){
+    public void open(){
         database = dbHelper.getWritableDatabase();
     }
     // Untuk menutup koneksi dengan database
-    private void close(){
+    public void close(){
         database.close();
     }
     // Membuat method CREATE data
@@ -44,43 +45,33 @@ public class StudentDataSource {
         contentValues.put("email", student.getEmail());
         contentValues.put("tanggal_lahir", student.getTanggalLahir());
 
-        open();
+        // open();
         // Perintah untuk memasukkan data
         long id = database.insert("student", null, contentValues);
-        close();
+        // close();
         return id > 0;
     }
 
     public List<Student> getAllStudent(){
+        // Deklarasi ArrayList untuk menyimpan value dari student
+        List<Student> studentList =  new ArrayList<>();
         // Membuka akses ke database
-        open();
+        // open();
         // Perintah query untuk mengambil seluruh data di table student
         Cursor cursor = database.rawQuery("SELECT * FROM student", new String[]{});
         // Membuat cursor ada di posisi index pertama
         cursor.moveToFirst();
-        // Deklarasi ArrayList untuk menyimpan value dari student
-        List<Student> studentList =  new ArrayList<>();
+
         // Melakukan perulangan apabila cursor belum mencapai index terakhir
         while (!cursor.isAfterLast()) {
-            // Memberikan record yang didapat ke masing-masing POJO
-            Student student = new Student();
-            student.setId(cursor.getInt(0));
-            student.setNamaDepan(cursor.getString(1));
-            student.setNamaBelakang(cursor.getString(2));
-            student.setNoHp(cursor.getString(3));
-            student.setGender(cursor.getString(4));
-            student.setJenjang(cursor.getString(5));
-            student.setHobi(cursor.getString(6));
-            student.setAlamat(cursor.getString(7));
-            student.setEmail(cursor.getString(8));
-            student.setTanggalLahir(cursor.getString(9));
+            Student student = fetchRow(cursor);
             // Memasukkan data yang dimiliki POJO ke dalam ArrayList
             studentList.add(student);
             // Memerintahkan cursor untuk naik 1 index /  menuju index berikutnya
             cursor.moveToNext();
         }
         // Menutup database
-        close();
+        // close();
         // Menuutup proses cursor
         cursor.close();
         // Mengembalikan nilai ArrayList agar dapat diambil ketika method digunakan
@@ -88,4 +79,21 @@ public class StudentDataSource {
 
     }
 
+    // region Added after Sunday, July 5th 2018
+    private Student fetchRow (Cursor cursor){
+        // Memberikan record yang didapat ke masing-masing POJO
+        Student student = new Student();
+        student.setId(cursor.getInt(0));
+        student.setNamaDepan(cursor.getString(1));
+        student.setNamaBelakang(cursor.getString(2));
+        student.setNoHp(cursor.getString(3));
+        student.setGender(cursor.getString(4));
+        student.setJenjang(cursor.getString(5));
+        student.setHobi(cursor.getString(6));
+        student.setAlamat(cursor.getString(7));
+        student.setEmail(cursor.getString(8));
+        student.setTanggalLahir(cursor.getString(9));
+        return student;
+    }
+    // endregion
 }

@@ -197,8 +197,12 @@ public class FormActvity extends AppCompatActivity {
             student.setEmail(email);
             student.setTanggalLahir(tanggalLahir);
 
+            // Membuka Koneksi Database
+            dataSource.open();
             // Eksekusi perintah addStudent
             boolean getSuccess = dataSource.addStudent(student);
+            // Menutup koneksi Database
+            dataSource.close();
             if (getSuccess){
                 Toast.makeText(this, "Data Berhasil Tersimpan", Toast.LENGTH_SHORT).show();
                 // Mengosongkan semua field

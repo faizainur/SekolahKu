@@ -26,9 +26,10 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        // Mengisi
+        dataSource.open();
         studentList = dataSource.getAllStudent();
-        Log.d("ListActivity", "studentList " + studentList.size());
+        Log.d("ListActivity", "studentList" + studentList.size());
+        dataSource.close();
     }
 
     @Override
