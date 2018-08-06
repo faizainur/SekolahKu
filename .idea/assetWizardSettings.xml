@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_add_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_person_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,11 +33,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\ASUS\Pictures\if_20_Graduation_2064495.png" />
-                                      <entry key="outputName" value="ic_action" />
+                                      <entry key="imageAsset" value="C:\Users\ASUS\Pictures\if_icons_user_1564534.png" />
+                                      <entry key="outputName" value="ic_pic_student_orange" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="ffffff" />
+                                      <entry key="themeColor" value="ef551f" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -65,7 +64,7 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="ef551f" />
-                                      <entry key="foregroundImage" value="C:\Users\ASUS\Pictures\if_20_Graduation_2064495.png" />
+                                      <entry key="foregroundImage" value="C:\Users\ASUS\Pictures\if_icons_user_1564534.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -76,6 +75,44 @@
                         <option name="values">
                           <map>
                             <entry key="outputIconType" value="ACTIONBAR" />
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="vectorAssetStep">
+                    <value>
+                      <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_person_black_24dp.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="color" value="ef551f" />
+                            <entry key="outputName" value="ic_person_orange" />
+                            <entry key="sourceFile" value="C:\Users\ASUS" />
                           </map>
                         </option>
                       </PersistentState>

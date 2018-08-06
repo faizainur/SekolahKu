@@ -59,15 +59,20 @@ public class ListActivity extends AppCompatActivity {
     private void getData(){
         List<Student>studentList = dataSource.getAllStudent();
 
+        ArrayList<Student> students = new ArrayList<>();
         List<String> studentData = new ArrayList<>();
         for (int i = 0; i < studentList.size(); i++){
             student = studentList.get(i);
             studentData.add(student.getNamaDepan() + " " + student.getNamaBelakang());
+            studentData.add(student.getGender());
+            studentData.add(student.getNoHp());
+            studentData.add(student.getJenjang());
+            students.add(student);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(ListActivity.this,
-                android.R.layout.simple_list_item_1, studentData);
+        StudentItemAdapter adapter = new StudentItemAdapter(ListActivity.this, students);
         listView.setAdapter(adapter);
+//        listView.setOnItemClickListener(this);
     }
 }
 

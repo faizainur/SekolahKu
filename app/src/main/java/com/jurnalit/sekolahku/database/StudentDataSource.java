@@ -55,8 +55,7 @@ public class StudentDataSource {
     public List<Student> getAllStudent(){
         // Deklarasi ArrayList untuk menyimpan value dari student
         List<Student> studentList =  new ArrayList<>();
-        // Membuka akses ke database
-        // open();
+
         // Perintah query untuk mengambil seluruh data di table student
         Cursor cursor = database.rawQuery("SELECT * FROM student", new String[]{});
         // Membuat cursor ada di posisi index pertama
@@ -70,8 +69,6 @@ public class StudentDataSource {
             // Memerintahkan cursor untuk naik 1 index /  menuju index berikutnya
             cursor.moveToNext();
         }
-        // Menutup database
-        // close();
         // Menuutup proses cursor
         cursor.close();
         // Mengembalikan nilai ArrayList agar dapat diambil ketika method digunakan
