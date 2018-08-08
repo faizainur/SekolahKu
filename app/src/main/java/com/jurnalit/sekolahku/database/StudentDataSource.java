@@ -45,10 +45,10 @@ public class StudentDataSource {
         contentValues.put("email", student.getEmail());
         contentValues.put("tanggal_lahir", student.getTanggalLahir());
 
-        // open();
+
         // Perintah untuk memasukkan data
         long id = database.insert("student", null, contentValues);
-        // close();
+
         return id > 0;
     }
 
@@ -93,4 +93,9 @@ public class StudentDataSource {
         return student;
     }
     // endregion
+
+    public void deleteAllData(){
+        String sql = "DELETE FROM student";
+        database.execSQL(sql);
+    }
 }

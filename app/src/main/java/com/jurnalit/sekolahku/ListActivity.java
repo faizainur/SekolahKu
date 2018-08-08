@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.jurnalit.sekolahku.database.StudentDataSource;
 import com.jurnalit.sekolahku.model.Student;
@@ -25,6 +26,8 @@ public class ListActivity extends AppCompatActivity {
     List<Student> studentList = new ArrayList<>();
     //Deklarasi view
     ListView listView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,17 @@ public class ListActivity extends AppCompatActivity {
             case R.id.menu_add :
                 Intent intent = new Intent(getApplicationContext(), FormActvity.class);
                 startActivity(intent);
+                break;
+            case R.id.menu_delete_all_data :
+                dataSource.open();
+                clearData();
+//                if (getSuccesDelete){
+//                    Toast.makeText(this, "Clear Data Successfully", Toast.LENGTH_LONG).show();
+//                } else {
+//                    Toast.makeText(this, "Unable Clear Data", Toast.LENGTH_LONG).show();
+//                }
+                dataSource.close();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -71,8 +85,14 @@ public class ListActivity extends AppCompatActivity {
         }
 
         StudentItemAdapter adapter = new StudentItemAdapter(ListActivity.this, students);
+        adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
 //        listView.setOnItemClickListener(this);
+    }
+    private void clearData(){
+        dataSource.deleteAllData();
+        getData();
+
     }
 }
 
