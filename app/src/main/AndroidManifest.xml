@@ -13,16 +13,17 @@
         <activity android:name=".ListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestActivity" />
         <activity
             android:name=".FormActvity"
             android:label="Tambah Siswa"
             android:parentActivityName=".ListActivity"></activity>
-        <activity android:name=".database.DetailActivity"></activity>
+        <activity
+            android:name=".DetailActivity"
+            android:parentActivityName=".ListActivity"
+            android:label="Detail Siswa"></activity>
     </application>
 
 </manifest>

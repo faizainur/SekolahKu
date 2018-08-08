@@ -1,4 +1,4 @@
-package com.jurnalit.sekolahku.database;
+package com.jurnalit.sekolahku;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

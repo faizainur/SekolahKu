@@ -53,7 +53,7 @@ public class ListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_add :
-                Intent intent = new Intent(getApplicationContext(), FormActvity.class);
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                 startActivity(intent);
                 break;
             case R.id.menu_delete_all_data :
