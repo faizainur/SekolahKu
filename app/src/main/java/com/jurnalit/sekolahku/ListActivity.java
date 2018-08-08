@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,21 +28,24 @@ public class ListActivity extends AppCompatActivity {
     List<Student> studentList = new ArrayList<>();
     //Deklarasi view
     ListView listView;
-
+    long id;
+    ArrayList<Student> students = new ArrayList<>();
+    ArrayList<String> studentData = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
         // Casting list view
         listView = findViewById(R.id.lv_students);
         dataSource.open();
         studentList = dataSource.getAllStudent();
         Log.d("ListActivity", "studentList " + studentList.size());
         getData();
-        dataSource.close();
+        int sz = studentData.size();
+        Log.d("ListActivity", "Size = " + sz);
+
     }
 
     @Override
@@ -53,7 +58,7 @@ public class ListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_add :
-                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), FormActvity.class);
                 startActivity(intent);
                 break;
             case R.id.menu_delete_all_data :
@@ -73,19 +78,38 @@ public class ListActivity extends AppCompatActivity {
     private void getData(){
         List<Student>studentList = dataSource.getAllStudent();
 
-        ArrayList<Student> students = new ArrayList<>();
-        List<String> studentData = new ArrayList<>();
+
         for (int i = 0; i < studentList.size(); i++){
             student = studentList.get(i);
-            studentData.add(student.getNamaDepan() + " " + student.getNamaBelakang());
-            studentData.add(student.getGender());
-            studentData.add(student.getNoHp());
-            studentData.add(student.getJenjang());
+//            id = student.getId();
+//            studentData.add(student.getNamaDepan() + " " + student.getNamaBelakang());
+//            studentData.add(student.getGender());
+//            studentData.add(student.getNoHp());
+//            studentData.add(student.getJenjang());
+
+
+
+
+
             students.add(student);
         }
 
-        StudentItemAdapter adapter = new StudentItemAdapter(ListActivity.this, students);
+        final StudentItemAdapter adapter = new StudentItemAdapter(ListActivity.this, students);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                id = adapter.getItemId(position);
+                Integer i = (int) (long) id;
+                student = students.get(i);
+//                Log.d("ListActivity", "id = " + id);
+                intent.putExtra("id", student.getId());
+                startActivity(intent);
+            }
+        });
         adapter.notifyDataSetChanged();
+
         listView.setAdapter(adapter);
 //        listView.setOnItemClickListener(this);
     }
@@ -94,5 +118,8 @@ public class ListActivity extends AppCompatActivity {
         getData();
 
     }
+//    public void studentItemsClicked(){
+//
+//    }
 }
 

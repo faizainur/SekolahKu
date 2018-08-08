@@ -67,8 +67,7 @@ public class FormActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_actvity);
 
-        // Casting Variable View
-//      btnSimpan = findViewById(R.id.btn_simpan);
+        // region Casting Variable View
         etNamaDepan = findViewById(R.id.et_front_name);
         etNamaBelakang = findViewById(R.id.et_back_name);
         etNoHP = findViewById(R.id.et_phone);
@@ -81,67 +80,11 @@ public class FormActvity extends AppCompatActivity {
         cbMenulis = findViewById(R.id.cb_menulis);
         etTanggalLahir = findViewById(R.id.et_date_picker);
         etEmail = findViewById(R.id.et_email);
-
-        // region Fungsi DataPicker
-        etTanggalLahir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // region DatePicker Sumber https://www.journaldev.com/9976/android-date-time-picker-dialog
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(FormActvity.this, new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-                            {
-                                etTanggalLahir.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-                // endregion
-            }
-        });
         // endregion
+        datePickMethod();
 
 
-        // region Method onClickListener untuk membaca button
-//        btnSimpan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String namaDepan = etNamaDepan.getText().toString();
-//                String namaBelakang = etNamaBelakang.getText().toString();
-//                String noHP = etNoHP.getText().toString();
-//                String gender;
-//                if(rbPria.isChecked()){
-//                    gender = rbPria.getText().toString().trim();
-//                }else if(rbWanita.isChecked()){
-//                    gender = rbWanita.getText().toString().trim();
-//                } else{
-//                    gender = "Error !!";
-//                }
-//                String hobi = "";
-//                if (cbMembaca.isChecked()){
-//                    hobi += "Membaca, ";
-//                }
-//                if (cbMenggambar.isChecked()){
-//                    hobi += "Menggambar, ";
-//                }
-//                if (cbMenulis.isChecked()){
-//                    hobi += "Menulis";
-//                }
-//                String jenjang;
-//                jenjang = spinnerPendidikan.getSelectedItem().toString();
-//                String alamat = etAlamat.getText().toString();
-//                Toast.makeText(FormActvity.this, "Selamat Datang " + namaDepan + namaBelakang + " !!\n"
-//                        + "No HP anda adalah : " + noHP + "\n"
-//                        + "Gender : " + gender + "\n"
-//                        + "Hobi : " + hobi + "\n"
-//                        + "Jenjang : " + jenjang + "\n"
-//                        + "Alamat : " + alamat + ".", Toast.LENGTH_LONG).show();
-//            }
-//        });
-        // endregion
+
     }
 
     // Memanggil method onCreatOptionsMenu untuk menampilkan menu
@@ -286,4 +229,29 @@ public class FormActvity extends AppCompatActivity {
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
+    // region Fungsi DataPicker
+    public void datePickMethod(){
+
+        etTanggalLahir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // region DatePicker Sumber https://www.journaldev.com/9976/android-date-time-picker-dialog
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(FormActvity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                    {
+                        etTanggalLahir.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+                // endregion
+            }
+        });
+    }
+    // endregion
+
 }

@@ -98,4 +98,13 @@ public class StudentDataSource {
         String sql = "DELETE FROM student";
         database.execSQL(sql);
     }
+
+    public Student getStudent(long id){
+        String sql = "SELECT * FROM student WHERE id=?";
+        Cursor cursor = database.rawQuery(sql, new String[]{Long.toString(id)});
+        cursor.moveToFirst();
+
+        Student student = fetchRow(cursor);
+        return student;
+    }
 }

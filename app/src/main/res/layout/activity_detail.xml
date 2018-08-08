@@ -32,7 +32,8 @@
         <!--region Detail Nama-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
             <ImageView
                 android:paddingTop="5sp"
                 android:layout_width="wrap_content"
@@ -40,30 +41,40 @@
                 android:src="@drawable/ic_account_detail_name_orange"
                 android:layout_alignParentTop="true"
                 android:id="@+id/img_view_name_detail"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_name_detail"
                 android:text="Nama"
-                android:id="@+id/et_nama_detail"/>
+                android:id="@+id/et_nama_detail_label"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_name_detail"
                 android:text="Faiz Ainur Rofiq"
-                android:layout_below="@+id/et_nama_detail"
-                android:textSize="20sp"/>
+                android:layout_below="@+id/et_nama_detail_label"
+                android:textSize="20sp"
+                android:id="@+id/et_nama_detail"/>
         </RelativeLayout>
+
         <!--endregion-->
+        <View android:id="@+id/separator"
+            android:background="#80ef551f"
+            android:layout_width = "fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical ="true"
+            android:layout_alignParentTop="true"/>
         <!--region Detail No.HP-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
             <ImageView
                 android:paddingTop="5sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_account_detail_name_orange"
+                android:src="@drawable/ic_account_detail_phone_orange"
                 android:layout_alignParentTop="true"
                 android:id="@+id/img_view_nohp_detail"/>
             <TextView
@@ -71,25 +82,33 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_nohp_detail"
                 android:text="No.HP"
-                android:id="@+id/et_nohp_detail"/>
+                android:id="@+id/et_nohp_detail_label"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_nohp_detail"
                 android:text="081369874562"
-                android:layout_below="@+id/et_nohp_detail"
-                android:textSize="20sp"/>
+                android:layout_below="@+id/et_nohp_detail_label"
+                android:textSize="20sp"
+                android:id="@+id/et_nohp_detail"/>
         </RelativeLayout>
         <!--endregion-->
+        <View
+            android:background="#80ef551f"
+            android:layout_width = "fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical ="true"
+            android:layout_alignParentTop="true"/>
         <!--region Detail Gender-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
             <ImageView
                 android:paddingTop="5sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_account_detail_name_orange"
+                android:src="@drawable/ic_account_detail_gender_orange"
                 android:layout_alignParentTop="true"
                 android:id="@+id/img_view_gender_detail"/>
             <TextView
@@ -97,25 +116,33 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_gender_detail"
                 android:text="Gender"
-                android:id="@+id/et_gender_detail"/>
+                android:id="@+id/et_gender_detail_label"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_gender_detail"
                 android:text="Pria"
-                android:layout_below="@+id/et_gender_detail"
-                android:textSize="20sp"/>
+                android:layout_below="@+id/et_gender_detail_label"
+                android:textSize="20sp"
+                android:id="@+id/et_gender_detail"/>
         </RelativeLayout>
         <!--endregion-->
+        <View
+            android:background="#80ef551f"
+            android:layout_width = "fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical ="true"
+            android:layout_alignParentTop="true"/>
         <!--region Detail Jenjang Pendidikan-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
             <ImageView
                 android:paddingTop="5sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_account_detail_name_orange"
+                android:src="@drawable/ic_account_detail_school_orange"
                 android:layout_alignParentTop="true"
                 android:id="@+id/img_view_jenjang_detail"/>
             <TextView
@@ -123,20 +150,28 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_jenjang_detail"
                 android:text="Jenjang Pendidikan"
-                android:id="@+id/et_jenjang_detail"/>
+                android:id="@+id/et_jenjang_detail_label"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_jenjang_detail"
                 android:text="S1 Sarjana"
-                android:layout_below="@+id/et_jenjang_detail"
-                android:textSize="20sp"/>
+                android:layout_below="@+id/et_jenjang_detail_label"
+                android:textSize="20sp"
+                android:id="@+id/et_jenjang_detail"/>
         </RelativeLayout>
         <!--endregion-->
+        <View
+            android:background="#80ef551f"
+            android:layout_width = "fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical ="true"
+            android:layout_alignParentTop="true"/>
         <!--region Detail Hobi-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
             <ImageView
                 android:paddingTop="5sp"
                 android:layout_width="wrap_content"
@@ -149,25 +184,33 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_hobi_detail"
                 android:text="Hobi"
-                android:id="@+id/et_hobi_detail"/>
+                android:id="@+id/et_hobi_detail_label"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_hobi_detail"
                 android:text="Main"
-                android:layout_below="@+id/et_hobi_detail"
-                android:textSize="20sp"/>
+                android:layout_below="@+id/et_hobi_detail_label"
+                android:textSize="20sp"
+                android:id="@+id/et_hobi_detail"/>
         </RelativeLayout>
         <!--endregion-->
-        <!--region Alamat-->
+        <View
+            android:background="#80ef551f"
+            android:layout_width = "fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical ="true"
+            android:layout_alignParentTop="true"/>
+        <!--    region Detail Alamat-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
             <ImageView
                 android:paddingTop="5sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_account_detail_name_orange"
+                android:src="@drawable/ic_account_detail_address_orange"
                 android:layout_alignParentTop="true"
                 android:id="@+id/img_view_alamat_detail"/>
             <TextView
@@ -175,15 +218,22 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_alamat_detail"
                 android:text="Nama"
-                android:id="@+id/et_alamat_detail"/>
+                android:id="@+id/et_alamat_detail_label"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_view_alamat_detail"
                 android:text="Alamat"
-                android:layout_below="@+id/et_alamat_detail"
-                android:textSize="20sp"/>
+                android:layout_below="@+id/et_alamat_detail_label"
+                android:textSize="20sp"
+                android:id="@+id/et_alamat_detail"/>
         </RelativeLayout>
         <!--endregion-->
+        <View
+            android:background="#80ef551f"
+            android:layout_width = "fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical ="true"
+            android:layout_alignParentTop="true"/>
     </LinearLayout>
 </LinearLayout>
