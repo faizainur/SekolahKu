@@ -25,6 +25,8 @@ public class DetailActivity extends AppCompatActivity {
         TextView etJenjang = findViewById(R.id.et_jenjang_detail);
         TextView etAlamat = findViewById(R.id.et_alamat_detail);
         TextView etHobi = findViewById(R.id.et_hobi_detail);
+        TextView etEmail = findViewById(R.id.et_email_detail);
+        TextView etTanggalLahir = findViewById(R.id.et_tgl_lahir_detail);
 
         StudentDataSource dataSource = new StudentDataSource(this);
 
@@ -33,13 +35,15 @@ public class DetailActivity extends AppCompatActivity {
             Student student = dataSource.getStudent(id);
             dataSource.close();
 
-            setTitle(student.getNamaDepan());
+            //setTitle(student.getNamaDepan());
             etNama.setText(student.getNamaDepan() + " " + student.getNamaBelakang());
             etGender.setText(student.getGender());
             etHobi.setText(student.getHobi());
             etNohp.setText(student.getNoHp());
             etJenjang.setText(student.getJenjang());
             etAlamat.setText(student.getAlamat());
+            etEmail.setText(student.getEmail());
+            etTanggalLahir.setText(student.getTanggalLahir());
         }
 
 

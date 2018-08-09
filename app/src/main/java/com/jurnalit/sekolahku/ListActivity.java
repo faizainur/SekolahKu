@@ -30,7 +30,6 @@ public class ListActivity extends AppCompatActivity {
     ListView listView;
     long id;
     ArrayList<Student> students = new ArrayList<>();
-    ArrayList<String> studentData = new ArrayList<>();
 
 
     @Override
@@ -39,12 +38,13 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         // Casting list view
         listView = findViewById(R.id.lv_students);
+
         dataSource.open();
         studentList = dataSource.getAllStudent();
         Log.d("ListActivity", "studentList " + studentList.size());
         getData();
-        int sz = studentData.size();
-        Log.d("ListActivity", "Size = " + sz);
+        dataSource.close();
+
 
     }
 
@@ -77,30 +77,31 @@ public class ListActivity extends AppCompatActivity {
     }
     private void getData(){
         List<Student>studentList = dataSource.getAllStudent();
+//        ArrayList<Student> students2 = new ArrayList<>();
 
 
         for (int i = 0; i < studentList.size(); i++){
             student = studentList.get(i);
-//            id = student.getId();
+            // region UNNECESSERY CODE HERE
+            // Writen in the course documentation (ppt file)
 //            studentData.add(student.getNamaDepan() + " " + student.getNamaBelakang());
 //            studentData.add(student.getGender());
 //            studentData.add(student.getNoHp());
 //            studentData.add(student.getJenjang());
-
-
-
-
-
+            // endregion
             students.add(student);
         }
+        // Changed to constant variable
 
         final StudentItemAdapter adapter = new StudentItemAdapter(ListActivity.this, students);
-
+        adapter.notifyDataSetChanged();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                 id = adapter.getItemId(position);
+                // Parsing id from long to integer caused by the result of getItemId() method is a long data
+                // and the requirement for get method is an integer data
                 Integer i = (int) (long) id;
                 student = students.get(i);
 //                Log.d("ListActivity", "id = " + id);
@@ -108,18 +109,23 @@ public class ListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        adapter.notifyDataSetChanged();
+
 
         listView.setAdapter(adapter);
 //        listView.setOnItemClickListener(this);
     }
     private void clearData(){
         dataSource.deleteAllData();
+        students.clear();
+        dataSource.open();
+        studentList = dataSource.getAllStudent();
+        Log.d("ListActivity", "studentList " + studentList.size());
         getData();
+        dataSource.close();
 
     }
 //    public void studentItemsClicked(){
-//
+        // TODO
 //    }
 }
 
