@@ -3,6 +3,7 @@ package com.jurnalit.sekolahku;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.provider.CalendarContract;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,10 +24,12 @@ import com.jurnalit.sekolahku.database.StudentDataSource;
 import com.jurnalit.sekolahku.model.Student;
 
 import java.nio.charset.CharacterCodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class FormActvity extends AppCompatActivity {
@@ -60,8 +63,10 @@ public class FormActvity extends AppCompatActivity {
     String tanggalLahir;
     String email;
     int mYear, mMonth, mDay;
+    Calendar c;
     // endregion
     List<Integer> angka = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +85,9 @@ public class FormActvity extends AppCompatActivity {
         cbMenulis = findViewById(R.id.cb_menulis);
         etTanggalLahir = findViewById(R.id.et_date_picker);
         etEmail = findViewById(R.id.et_email);
+        c = Calendar.getInstance();
         // endregion
         datePickMethod();
-
 
 
     }
@@ -98,34 +103,36 @@ public class FormActvity extends AppCompatActivity {
     // Memanggil methon onOptionsItemSelected untuk membaca pilihan user pada menu serta melakukan action
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             // Memanggil id pada menu menggunakan switch case statement
-            case R.id.action_simpan :
+            case R.id.action_simpan:
                 simpan();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-    private void simpan(){
+
+    private void simpan() {
         namaDepan = etNamaDepan.getText().toString().trim();
         namaBelakang = etNamaBelakang.getText().toString().trim();
         noHP = etNoHP.getText().toString().trim();
         tanggalLahir = etTanggalLahir.getText().toString().trim();
         email = etEmail.getText().toString().trim();
-        if(rbPria.isChecked()){
+        if (rbPria.isChecked()) {
             gender = rbPria.getText().toString().trim();
-        }else if(rbWanita.isChecked()){
+        } else if (rbWanita.isChecked()) {
             gender = rbWanita.getText().toString().trim();
         }
-        if (cbMembaca.isChecked()){
-            hobi += "Membaca, ";
-        }
-        if (cbMenggambar.isChecked()){
-            hobi += "Menggambar, ";
-        }
-        if (cbMenulis.isChecked()){
+//        if (cbMembaca.isChecked()) {
+//            hobi += "Membaca, ";
+//        }
+        if (cbMenulis.isChecked()) {
             hobi += "Menulis";
         }
+        if (cbMenggambar.isChecked()) {
+            hobi += "Menggambar, ";
+        }
+
         jenjang = spinnerPendidikan.getSelectedItem().toString();
         alamat = etAlamat.getText().toString();
         if (validateForm()) {
@@ -146,7 +153,7 @@ public class FormActvity extends AppCompatActivity {
             boolean getSuccess = dataSource.addStudent(student);
             // Menutup koneksi Database
             dataSource.close();
-            if (getSuccess){
+            if (getSuccess) {
                 Toast.makeText(this, "Data Berhasil Tersimpan", Toast.LENGTH_SHORT).show();
                 // Mengosongkan semua field
                 etNamaDepan.setText("");
@@ -179,45 +186,45 @@ public class FormActvity extends AppCompatActivity {
             }
         }
     }
-    private boolean validateForm(){
-        if (namaDepan.isEmpty()){
+
+    private boolean validateForm() {
+        if (namaDepan.isEmpty()) {
             etNamaDepan.setError("This field is required");
             etNamaDepan.requestFocus();
             return false;
-        }else if (namaBelakang.isEmpty()){
+        } else if (namaBelakang.isEmpty()) {
             etNamaBelakang.setError("This field is required");
             etNamaDepan.requestFocus();
             return false;
-        }else if (noHP.isEmpty()){
+        } else if (noHP.isEmpty()) {
             etNoHP.setError("This field is required");
             etNamaDepan.requestFocus();
             return false;
-        }else if (noHP.length() > 12){
+        } else if (noHP.length() > 12) {
             etNoHP.setError("Max 12 digit");
             etNoHP.setText("");
             etNoHP.requestFocus();
             return false;
-        }else if (alamat.isEmpty()){
+        } else if (alamat.isEmpty()) {
             etAlamat.setError("This field is required");
             etAlamat.requestFocus();
             return false;
-        } else if (gender.isEmpty()){
+        } else if (gender.isEmpty()) {
             Toast.makeText(FormActvity.this, "This field must be chosen", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (spinnerPendidikan.getSelectedItemPosition() == 0){
+        } else if (spinnerPendidikan.getSelectedItemPosition() == 0) {
             Toast.makeText(FormActvity.this, "This field must be chosen", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!isValidEmail(email)){
+        } else if (!isValidEmail(email)) {
             etEmail.setError("Not a valid email address");
             etEmail.setText("");
             etEmail.requestFocus();
             return false;
-        } else if (email.isEmpty()){
+        } else if (email.isEmpty()) {
             etEmail.setError("This is required");
             etEmail.setText("");
             etEmail.requestFocus();
-        }
-        else if(tanggalLahir.isEmpty()){
+        } else if (tanggalLahir.isEmpty()) {
             etTanggalLahir.setError("This field is required");
             etTanggalLahir.setText("");
             etTanggalLahir.requestFocus();
@@ -226,32 +233,40 @@ public class FormActvity extends AppCompatActivity {
 
         return true;
     }
+
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
+
     // region Fungsi DataPicker
-    public void datePickMethod(){
+    public void datePickMethod() {
 
         etTanggalLahir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // region DatePicker Sumber https://www.journaldev.com/9976/android-date-time-picker-dialog
-                final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(FormActvity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-                    {
-                        etTanggalLahir.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                    }
-                }, mYear, mMonth, mDay);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(FormActvity.this, onDateSetListener, mYear, mMonth, mDay);
                 datePickerDialog.show();
                 // endregion
             }
         });
     }
+
     // endregion
+    private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month);
+            c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+            etTanggalLahir.setText(simpleDateFormat.format(c.getTime()));
+        }
+
+    };
 
 }

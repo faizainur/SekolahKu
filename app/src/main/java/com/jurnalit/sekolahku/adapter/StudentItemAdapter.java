@@ -1,4 +1,4 @@
-package com.jurnalit.sekolahku;
+package com.jurnalit.sekolahku.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.jurnalit.sekolahku.R;
 import com.jurnalit.sekolahku.model.Student;
 
 import org.w3c.dom.Text;

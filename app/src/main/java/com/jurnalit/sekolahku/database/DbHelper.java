@@ -31,6 +31,12 @@ public class DbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        // Syntax untuk mengupgrade database dengan mengubah versi (version) dari database
+        // Setiap penambahan column pada database diikuti dengan menambah column baru pada
+        // Method onCreate
+//        if (oldVersion < 2){
+//            db.execSQL("ALTER TABLE student ADD COLUMN email TEXT");
+//            db.execSQL("ALTER TABLE student ADD COLUMN tanggal_lahir");
+//        }
     }
 }

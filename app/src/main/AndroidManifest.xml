@@ -28,7 +28,16 @@
             android:name=".DetailActivity"
             android:label="Detail Siswa"
             android:parentActivityName=".ListActivity" />
-        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".ResultActivity"
+            android:parentActivityName=".ListActivity"
+            android:label="Search Result">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.SEARCH"/>-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+            <!--<meta-data android:name="android.app.searchable"-->
+                <!--android:resource="@xml/searchable"/>-->
+        </activity>
     </application>
 
 </manifest>
