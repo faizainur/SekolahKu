@@ -107,4 +107,19 @@ public class StudentDataSource {
         Student student = fetchRow(cursor);
         return student;
     }
+
+    public List<Student> search (String keyword){
+        List<Student> students = new ArrayList<>();
+        String sql = "SELECT * FROM student WHERE " + "nama_depan LIKE ? OR nama_belakang LIKE ?";
+
+        Cursor cursor = database.rawQuery(sql, new String[]{"%" + keyword + "%", "%" + keyword + "%"});
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            Student student = fetchRow(cursor);
+            students.add(student);
+            cursor.moveToNext();
+        }
+        return students;
+    }
 }

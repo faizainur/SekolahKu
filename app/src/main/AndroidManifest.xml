@@ -14,16 +14,21 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+
         </activity>
         <activity
             android:name=".FormActvity"
             android:label="Tambah Siswa"
-            android:parentActivityName=".ListActivity"></activity>
+            android:parentActivityName=".ListActivity" />
         <activity
             android:name=".DetailActivity"
-            android:parentActivityName=".ListActivity"
-            android:label="Detail Siswa"></activity>
+            android:label="Detail Siswa"
+            android:parentActivityName=".ListActivity" />
+        <activity android:name=".ResultActivity"></activity>
     </application>
 
 </manifest>

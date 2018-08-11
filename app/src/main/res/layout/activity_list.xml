@@ -6,11 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ListActivity"
     android:orientation="vertical">
-
+    <android.support.v7.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_view"
+        android:layout_margin="0dp"
+        app:iconifiedByDefault="false"
+        app:queryHint="Cari Siswa"
+        ></android.support.v7.widget.SearchView>
     <ListView
         android:id="@+id/lv_students"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </ListView>
+
 
 </LinearLayout>

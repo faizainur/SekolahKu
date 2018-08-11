@@ -12,4 +12,6 @@
         <item>S2</item>
         <item>S3</item>
     </string-array>
+    <string name="img_detail_desciption">Image Account Details</string>
+    <string name="search_hint">Cari Siswa</string>
 </resources>
