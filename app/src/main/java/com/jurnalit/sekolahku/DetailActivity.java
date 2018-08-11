@@ -35,10 +35,11 @@ public class DetailActivity extends AppCompatActivity {
             Student student = dataSource.getStudent(id);
             dataSource.close();
 
-            //setTitle(student.getNamaDepan());
+//            setTitle(student.getNamaDepan());
             etNama.setText(student.getNamaDepan() + " " + student.getNamaBelakang());
             etGender.setText(student.getGender());
-            etHobi.setText(student.getHobi());
+            String hobi = student.getHobi();
+            etHobi.setText(hobi.replaceAll(", $", ""));
             etNohp.setText(student.getNoHp());
             etJenjang.setText(student.getJenjang());
             etAlamat.setText(student.getAlamat());

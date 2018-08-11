@@ -14,11 +14,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.SEARCH" />
+                <!--<action android:name="android.intent.action.SEARCH" />-->
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".ResultActivity" />
         </activity>
         <activity
             android:name=".FormActvity"
@@ -29,14 +29,14 @@
             android:label="Detail Siswa"
             android:parentActivityName=".ListActivity" />
         <activity android:name=".ResultActivity"
-            android:parentActivityName=".ListActivity"
-            android:label="Search Result">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEARCH"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
-            <!--<meta-data android:name="android.app.searchable"-->
-                <!--android:resource="@xml/searchable"/>-->
+            android:label="Search Result"
+            android:launchMode="singleTop"
+            android:parentActivityName=".ListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
     </application>
 

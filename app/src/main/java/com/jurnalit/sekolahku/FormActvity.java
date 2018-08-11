@@ -1,9 +1,6 @@
 package com.jurnalit.sekolahku;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.provider.CalendarContract;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,16 +15,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.google.android.gms.common.data.DataBufferRef;
 import com.jurnalit.sekolahku.database.StudentDataSource;
 import com.jurnalit.sekolahku.model.Student;
-
-import java.nio.charset.CharacterCodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -123,14 +115,14 @@ public class FormActvity extends AppCompatActivity {
         } else if (rbWanita.isChecked()) {
             gender = rbWanita.getText().toString().trim();
         }
-//        if (cbMembaca.isChecked()) {
-//            hobi += "Membaca, ";
-//        }
+        if (cbMembaca.isChecked()) {
+            hobi += "Membaca ";
+        }
         if (cbMenulis.isChecked()) {
-            hobi += "Menulis";
+            hobi += "Menulis ";
         }
         if (cbMenggambar.isChecked()) {
-            hobi += "Menggambar, ";
+            hobi += "Menggambar ";
         }
 
         jenjang = spinnerPendidikan.getSelectedItem().toString();
@@ -147,7 +139,6 @@ public class FormActvity extends AppCompatActivity {
             student.setEmail(email);
             student.setTanggalLahir(tanggalLahir);
 
-            // Membuka Koneksi Database
             dataSource.open();
             // Eksekusi perintah addStudent
             boolean getSuccess = dataSource.addStudent(student);
@@ -167,8 +158,7 @@ public class FormActvity extends AppCompatActivity {
                 cbMenulis.setChecked(false);
                 cbMenggambar.setChecked(false);
                 cbMembaca.setChecked(false);
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                startActivity(intent);
+                finish();
             } else {
                 Toast.makeText(this, "Data Gagal Tersimpan", Toast.LENGTH_SHORT).show();
                 // Mengosongkan semua field

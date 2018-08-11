@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,26 +46,36 @@ public class ListActivity extends AppCompatActivity {
 
         // Casting view
         listView = findViewById(R.id.lv_students);
-        searchView = findViewById(R.id.search_view);
-        searchView2 = findViewById(R.id.menu_search);
+//        searchView = findViewById(R.id.search_view);
+        searchView = findViewById(R.id.menu_search);
         registerForContextMenu(listView);
 
+
+    }
+
+    @Override
+    protected void onResume() {
         dataSource.open();
         studentList = dataSource.getAllStudent();
         Log.d("ListActivity", "studentList " + studentList.size());
         getData();
         dataSource.close();
+        super.onResume();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView2 = (android.support.v7.widget.SearchView) menu.findItem(R.id.menu_search).getActionView();
-        // Assumes current activity is the searchable activity
-        searchView2.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        return true;
     }
 
     @Override
@@ -78,7 +90,7 @@ public class ListActivity extends AppCompatActivity {
                 if (clearData()){
                     Toast.makeText(this, "Clear Data Successfully", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(this, "Unable Clear Data", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Unable to Clear Data", Toast.LENGTH_LONG).show();
                 }
                 dataSource.close();
                 break;
@@ -112,77 +124,61 @@ public class ListActivity extends AppCompatActivity {
         // Changed to constant variable
         final StudentItemAdapter adapter = new StudentItemAdapter(ListActivity.this, studentList);
 
+        listView.setAdapter(adapter);
+        // region SearchView method
+//        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Toast.makeText(ListActivity.this, "Searching for "+ "'" + query + "'", Toast.LENGTH_SHORT).show();
+//                dataSource.open();
+//                studentList.clear();
+//                List<Student> students = dataSource.search(query);
+//
+//                for (int i = 0; i < students.size(); i++){
+//                    Student student = students.get(i);
+//                    studentList.add(student);
+//                }
+//                adapter.notifyDataSetChanged();
+//                dataSource.close();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+////                Toast.makeText(ListActivity.this, "S " + newText, Toast.LENGTH_SHORT).show();
+//                dataSource.open();
+//                studentList.clear();
+//                List<Student> students = dataSource.search(newText);
+//
+//                for (int i = 0; i < students.size(); i++){
+//                    Student student = students.get(i);
+//                    studentList.add(student);
+//                }
+//                adapter.notifyDataSetChanged();
+//                dataSource.close();
+//                return false;
+//            }
+//        });
+        // endregion
         // region listView OnClickListener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                id = adapter.getItemId(position);
-                // Parsing id from long to integer caused by the result of getItemId() method is a long data
-                // and the requirement for get method is an integer data
-                Integer i = (int) (long) id;
-                student = studentList.get(i);
-//                Log.d("ListActivity", "id = " + id);
+                // region UNNECESSERY CODE HERE
+//                id = adapter.getItemId(position);
+//                // Parsing id from long to integer caused by the result of getItemId() method is a long data
+//                // and the requirement for get method is an integer data
+//                Integer i = (int) (long) id;
+//                student = studentList.get(i);
+                // endregion
+                Student student = adapter.getItem(position);
                 intent.putExtra("id", student.getId());
                 startActivity(intent);
             }
         });
         // endregion
-
-        // region SearchView ActionBar
-        Intent intent  = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.d("ListActivity", "The keyword is " + query);
-            doMySearch(query);}
-        // endregion
-        // region SearchView method
-        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(ListActivity.this, "Searching for "+ "'" + query + "'", Toast.LENGTH_SHORT).show();
-                dataSource.open();
-                studentList.clear();
-                List<Student> students = dataSource.search(query);
-
-                for (int i = 0; i < students.size(); i++){
-                    Student student = students.get(i);
-                    studentList.add(student);
-                }
-                adapter.notifyDataSetChanged();
-                dataSource.close();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-//                Toast.makeText(ListActivity.this, "S " + newText, Toast.LENGTH_SHORT).show();
-                dataSource.open();
-                studentList.clear();
-                List<Student> students = dataSource.search(newText);
-
-                for (int i = 0; i < students.size(); i++){
-                    Student student = students.get(i);
-                    studentList.add(student);
-                }
-                adapter.notifyDataSetChanged();
-                dataSource.close();
-                return false;
-            }
-        });
-        // endregion
-
         adapter.notifyDataSetChanged();
-        listView.setAdapter(adapter);
-    }
-    private void doMySearch(String keyword){
-        Toast.makeText(this, "The keyword is " + keyword, Toast.LENGTH_SHORT).show();
-        studentList.clear();
-        List<Student> students =  dataSource.search(keyword);
-        for (int i = 0; i < students.size(); i++) {
-            Student student = students.get(i);
-            studentList.add(student);
-        }
     }
     private boolean clearData(){
         dataSource.deleteAllData();
@@ -193,6 +189,5 @@ public class ListActivity extends AppCompatActivity {
         }
         return false;
     }
-
 }
 
