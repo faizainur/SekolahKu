@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -58,11 +59,14 @@ public class FormActvity extends AppCompatActivity {
     Calendar c;
     // endregion
     List<Integer> angka = new ArrayList<>();
+    long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_actvity);
+
+        id = getIntent().getLongExtra("id", 0);
 
         // region Casting Variable View
         etNamaDepan = findViewById(R.id.et_front_name);
@@ -81,7 +85,40 @@ public class FormActvity extends AppCompatActivity {
         // endregion
         datePickMethod();
 
+        if (id != 0){
+            dataSource.open();
+            Student student = dataSource.getStudent(id);
+            dataSource.close();
 
+            etNamaDepan.setText(student.getNamaDepan());
+            etNamaBelakang.setText(student.getNamaBelakang());
+            etNoHP.setText(student.getNoHp());
+            etAlamat.setText(student.getNoHp());
+            etEmail.setText(student.getEmail());
+            etTanggalLahir.setText(student.getTanggalLahir());
+            gender = student.getGender();
+            switch (gender){
+                case "Pria" :
+                    rbPria.setChecked(true);
+                    break;
+                case "Wanita" :
+                    rbWanita.setChecked(true);
+                    break;
+            }
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
+                    R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.pendidikan));
+            spinnerPendidikan.setSelection(dataAdapter.getPosition(student.getJenjang()));
+
+            if (student.getHobi().contains("Membaca ")){
+                cbMembaca.setChecked(true);
+            }
+            if (student.getHobi().contains("Menggambar ")){
+                cbMenggambar.setChecked(true);
+            }
+            if (student.getHobi().contains("Menulis ")){
+                cbMenulis.setChecked(true);
+            }
+        }
     }
 
     // Memanggil method onCreatOptionsMenu untuk menampilkan menu
@@ -138,41 +175,53 @@ public class FormActvity extends AppCompatActivity {
             student.setAlamat(alamat);
             student.setEmail(email);
             student.setTanggalLahir(tanggalLahir);
-
-            dataSource.open();
-            // Eksekusi perintah addStudent
-            boolean getSuccess = dataSource.addStudent(student);
-            // Menutup koneksi Database
-            dataSource.close();
-            if (getSuccess) {
-                Toast.makeText(this, "Data Berhasil Tersimpan", Toast.LENGTH_SHORT).show();
-                // Mengosongkan semua field
-                etNamaDepan.setText("");
-                etNamaBelakang.setText("");
-                etAlamat.setText("");
-                etNoHP.setText("");
-                etEmail.setText("");
-                etTanggalLahir.setText("");
-                rbWanita.setChecked(false);
-                rbPria.setChecked(false);
-                cbMenulis.setChecked(false);
-                cbMenggambar.setChecked(false);
-                cbMembaca.setChecked(false);
-                finish();
-            } else {
-                Toast.makeText(this, "Data Gagal Tersimpan", Toast.LENGTH_SHORT).show();
-                // Mengosongkan semua field
-                etNamaDepan.setText("");
-                etNamaBelakang.setText("");
-                etAlamat.setText("");
-                etNoHP.setText("");
-                etEmail.setText("");
-                etTanggalLahir.setText("");
-                rbWanita.setChecked(false);
-                rbPria.setChecked(false);
-                cbMenulis.setChecked(false);
-                cbMenggambar.setChecked(false);
-                cbMembaca.setChecked(false);
+            boolean getSuccess;
+            if (id == 0) {
+                dataSource.open();
+                // Eksekusi perintah addStudent
+                getSuccess = dataSource.addStudent(student);
+                if (getSuccess) {
+                    Toast.makeText(this, "Data Berhasil Tersimpan", Toast.LENGTH_SHORT).show();
+                    // Mengosongkan semua field
+                    etNamaDepan.setText("");
+                    etNamaBelakang.setText("");
+                    etAlamat.setText("");
+                    etNoHP.setText("");
+                    etEmail.setText("");
+                    etTanggalLahir.setText("");
+                    rbWanita.setChecked(false);
+                    rbPria.setChecked(false);
+                    cbMenulis.setChecked(false);
+                    cbMenggambar.setChecked(false);
+                    cbMembaca.setChecked(false);
+                    dataSource.close();
+                    finish();
+                } else {
+                    Toast.makeText(this, "Data Gagal Tersimpan", Toast.LENGTH_SHORT).show();
+                }
+            } else if (id > 0) {
+                dataSource.open();
+                student.setId(id);
+                getSuccess = dataSource.updateStudent(student);
+                if (getSuccess) {
+                    Toast.makeText(this, "Data Berhasil Tersimpan", Toast.LENGTH_SHORT).show();
+                    // Mengosongkan semua field
+                    etNamaDepan.setText("");
+                    etNamaBelakang.setText("");
+                    etAlamat.setText("");
+                    etNoHP.setText("");
+                    etEmail.setText("");
+                    etTanggalLahir.setText("");
+                    rbWanita.setChecked(false);
+                    rbPria.setChecked(false);
+                    cbMenulis.setChecked(false);
+                    cbMenggambar.setChecked(false);
+                    cbMembaca.setChecked(false);
+                    dataSource.close();
+                    finish();
+                } else {
+                    Toast.makeText(this, "Data Gagal Tersimpan", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -220,7 +269,6 @@ public class FormActvity extends AppCompatActivity {
             etTanggalLahir.requestFocus();
             return false;
         }
-
         return true;
     }
 
@@ -230,22 +278,19 @@ public class FormActvity extends AppCompatActivity {
 
     // region Fungsi DataPicker
     public void datePickMethod() {
-
         etTanggalLahir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // region DatePicker Sumber https://www.journaldev.com/9976/android-date-time-picker-dialog
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(FormActvity.this, onDateSetListener, mYear, mMonth, mDay);
                 datePickerDialog.show();
-                // endregion
             }
         });
     }
-
     // endregion
+
     private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

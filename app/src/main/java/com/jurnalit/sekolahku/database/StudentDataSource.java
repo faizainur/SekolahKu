@@ -108,6 +108,25 @@ public class StudentDataSource {
         return student;
     }
 
+    public boolean updateStudent(Student student){
+        // Menggunakan ContentValues untuk memasukkkan data ke dalam field yang ditentukan
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nama_depan", student.getNamaDepan());
+        contentValues.put("nama_belakang", student.getNamaBelakang());
+        contentValues.put("no_hp", student.getNoHp());
+        contentValues.put("gender", student.getGender());
+        contentValues.put("jenjang", student.getJenjang());
+        contentValues.put("hobi", student.getHobi());
+        contentValues.put("alamat", student.getAlamat());
+        contentValues.put("email", student.getEmail());
+        contentValues.put("tanggal_lahir", student.getTanggalLahir());
+
+
+        // Perintah untuk memasukkan data
+        long id = database.update("student", contentValues, "id=?", new String[]{Long.toString(student.getId())});
+        return id > 0;
+    }
+
     public List<Student> search (String keyword){
         List<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM student WHERE " + "nama_depan LIKE ? OR nama_belakang LIKE ?";
@@ -121,5 +140,9 @@ public class StudentDataSource {
             cursor.moveToNext();
         }
         return students;
+    }
+    public boolean removeData(Student student){
+        database.delete("student", "id=?", new String[]{Long.toString(student.getId())});
+        return true;
     }
 }
